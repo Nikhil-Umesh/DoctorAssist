@@ -1,0 +1,87 @@
+ CREATE TABLE Patient(
+   pid number(6) PRIMARY KEY,
+   pname varchar(50),
+  age number(5),
+email varchar(30),
+phnumber number(15) UNIQUE,
+address varchar(100)
+);
+CREATE TABLE Doctor(
+did varchar(10) PRIMARY KEY,
+dname varchar(50),
+dage number(5),
+demail varchar(60),
+dphnumber number(20) UNIQUE,
+Specialization varchar(20),
+Password varchar(20)
+);
+CREATE TABLE Appointment(
+appid varchar(20) PRIMARY KEY,
+ppid number(6),
+ddid varchar(10),
+FOREIGN KEY(ppid) REFERENCES Patient(pid),
+FOREIGN KEY(ddid) REFERENCES Doctor(did),
+aptdate date,
+aptime varchar(20)
+);
+INSERT INTO Appointment VALUES('a01',1,'d1','12/28/2016','09:30');	
+CREATE TABLE Medicines(
+mid number(20)PRIMARY KEY,
+medicines varchar(20)
+);
+CREATE TABLE Test(
+Tid number(20)PRIMARY KEY,
+testname varchar(20)
+); 
+CREATE TABLE Disease(
+Disid number(20)PRIMARY KEY,
+disname varchar(20)
+); 
+CREATE TABLE patientrecord(
+mrid number(20)PRIMARY KEY,
+apppid varchar(20),
+FOREIGN KEY(apppid) REFERENCES Appointment(appid),
+pid2 number(6),
+FOREIGN KEY(pid2) REFERENCES Patient(pid),
+Diseases number(20),
+FOREIGN KEY(Diseases) REFERENCES Disease(Disid),
+diagnosis varchar(50),
+testprescribe number(20),
+FOREIGN KEY(testprescribe) REFERENCES Test(Tid),
+Medicineprescibe number(20),
+FOREIGN KEY (Medicineprescibe) REFERENCES Medicines(mid)
+);
+CREATE TABLE patientprevious(
+ppmid varchar(50)PRIMARY KEY,
+pid1 number(6),
+FOREIGN KEY(pid1) REFERENCES Patient(pid),
+previous number(20),
+FOREIGN KEY(previous) REFERENCES Disease(Disid),
+allergies number(20),
+FOREIGN KEY (allergies) REFERENCES Medicines(mid)
+);
+
+ INSERT INTO Doctor VALUES('d1','Ramesh',35,'ramesh@gmail.com',8712378911,'Surgon','abc');
+INSERT INTO Doctor VALUES('d2','Suresh',35,'Suresh@gmail.com',8712378912,'Neurologist','abcd');
+INSERT INTO Doctor VALUES('d3','Suhas',35,'Suhas@yahoo.com',8712378913,'ENT','ab');
+INSERT INTO Doctor VALUES('d4','Rakesh',40,'Rakesh@hotmail.com',8712378921,'Dentist','bc');
+INSERT INTO Doctor VALUES('d5','Shankar',45,'Shankar@hotmail.com',8712378922,'Physician','bcd');
+
+
+INSERT INTO Medicines Values(01,'Cold Act');
+INSERT INTO Medicines Values(02,'Beta Cap');
+INSERT INTO Medicines Values(03,'Crocin');
+INSERT INTO Medicines Values(04,'Gelusil');
+INSERT INTO Medicines Values(05,'Tami Flu');
+
+INSERT INTO Disease Values(001,'Flu');
+INSERT INTO Disease Values(002,'Typhoid');
+INSERT INTO Disease Values(003,'Colhera');
+INSERT INTO Disease Values(004,'Cavity');
+INSERT INTO Disease Values(005,'Tonsils');
+
+INSERT INTO Test Values(1,'X-Ray');
+INSERT INTO Test Values(2,'MRI');
+INSERT INTO Test Values(3,'ECG');
+INSERT INTO Test Values(4,'Blood test');
+INSERT INTO Test Values(5,'Urine test');
